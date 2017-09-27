@@ -1,2 +1,2 @@
-model_checkpoint_path: "simpleRegression01.ckpt"
-all_model_checkpoint_paths: "simpleRegression01.ckpt"
+model_checkpoint_path: "neuralNet01.ckpt"
+all_model_checkpoint_paths: "neuralNet01.ckpt"
