@@ -9,8 +9,6 @@
 import numpy as np
 from matplotlib import pyplot as plt
 import cv2
-from fractions import gcd
-def lcm(a,b): return abs(a * b) / gcd(a,b) if a and b else 0
 
 # Put show_plots to true in order to have plt show plots
 show_plots = False
@@ -55,42 +53,15 @@ plt.close()
 # it actuall finds many more circles than should be found it seems
 # Need to understand how to manage sensitivites.
 # The plots look like garbage (circle finding is crap)
-# bluring image in different ways
-###############################################################
 
 img = cv2.imread(imPath + imName + imExt,0)
-width, height = img.shape[:2]
-blur_coef = gcd(width, height)**2
-
-## Gaussian Blur doesn't work so well
-# blur_img = cv2.GaussianBlur(img,(blur_coef,blur_coef),0)
-## Bilateral Blur doesn't work so well either and is slow
-# blur_img = cv2.bilateralFilter(img, blur_coef, 0, blur_coef )
-
-## Median Blur is best atm
-blur_img = cv2.medianBlur(img,blur_coef)
-
-###############################################################
-# do threshold for image and it's inverse, then add them
-# Can use:
-# THRESH_BINARY
-# THRESH_TOZERO
-ret,cimg1 = cv2.threshold(blur_img,127,255,cv2.THRESH_TOZERO)
-ret,cimg2 = cv2.threshold(blur_img,127,255,cv2.THRESH_TOZERO_INV)
-
-# Add two images with weighting
-alpha = 0.5
-beta = ( 1.0 - alpha )
-cimg = cv2.addWeighted( cimg1, alpha, cimg2, beta, 0.0)
-cv2.imshow('Adding', cimg)
-
-## Adaptive thresholding was also an option
-# cimg = cv2.adaptiveThreshold(img,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY,11,2)
+img = cv2.medianBlur(img,5)
+cimg = cv2.cvtColor(img,cv2.COLOR_GRAY2BGR)
 
 # The forth argument is the min distance between centers of detected circles
 # Have to make it large to not find too many
-circles = cv2.HoughCircles(cimg,cv2.HOUGH_GRADIENT,1,30,
-                            param1=50,param2=30,minRadius=0,maxRadius=150)
+circles = cv2.HoughCircles(img,cv2.HOUGH_GRADIENT,1,75,
+                            param1=50,param2=30,minRadius=0,maxRadius=0)
 
 circles = np.uint16(np.around(circles))
 for i in circles[0,:]:
