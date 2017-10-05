@@ -1,24 +1,26 @@
 import os
+import io
 import tensorflow as tf
 import PIL.Image
 from object_detection.utils import dataset_util
 
 
 flags = tf.app.flags
-flags.DEFINE_string('data_dir', '', 'Path to images and labels')
-flags.DEFINE_string('output_dir', '', 'Path to output TFRecord')
+flags.DEFINE_string('data_path', '', 'Path to images and labels')
+flags.DEFINE_string('output_path', '', 'Path to output TFRecord')
 FLAGS = flags.FLAGS
 
+data_path = "images"
 
 def create_tf_example(File, labels):
 
     height = 200 # Image height
     width = 300 # Image width
-    img_path = os.path.join(data_dir, File)
+    img_path = os.path.join(data_path, File)
     with tf.gfile.GFile(img_path, 'rb') as fid:
       encoded_jpg = fid.read()
-    filename = File # Filename of the image. Empty if image is not from file
-    encoded_image_data = encoded_jpg # Encoded image bytes
+    filename = File.encode('utf8') # Filename of the image. Empty if image is not from file
+    encoded_image_data = bytes(encoded_jpg) # Encoded image bytes
     image_format = b'jpeg' # b'jpeg' or b'png'
 
     xmins = [] # List of normalized left x coordinates in bounding box (1 per box)
@@ -35,7 +37,7 @@ def create_tf_example(File, labels):
         ymins.append(box[1] / height)
         xmaxs.append(box[2] / width)
         ymaxs.append(box[3] / height)
-        classes_text.append('Crater')
+        classes_text.append('Crater'.encode('utf8'))
         classes.append(1)
 
     tf_example = tf.train.Example(features=tf.train.Features(feature={
@@ -59,8 +61,8 @@ def create_tf_example(File, labels):
 def main(_):
     writer = tf.python_io.TFRecordWriter(FLAGS.output_path)
 
-    all_files = os.listdir(data_dir)
-    labels_file = open(os.path.join(data_dir, "GTF.lms"), "r")
+    all_files = os.listdir(data_path)
+    labels_file = open(os.path.join(data_path, "GTF.lms"), "r")
     labels = {}
 
     for line in labels_file:
