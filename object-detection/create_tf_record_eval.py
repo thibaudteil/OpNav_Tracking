@@ -76,7 +76,7 @@ def main(_):
         labels[split[0]] = values
 
 
-    for File in all_files[:train_num]:
+    for File in all_files[train_num:]:
         if File[-3:] == "jpg":
             tf_example = create_tf_example(File, labels[File])
             writer.write(tf_example.SerializeToString())
