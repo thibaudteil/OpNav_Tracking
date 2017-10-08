@@ -71,7 +71,7 @@ def main(_):
         split = line.split(" : ")[:-1]
         values = []
         for i in range(2, len(split), 4):
-            box = (int(split[i]), int(split[i + 1]), int(split[i + 2]), int(split[i + 3]))
+            box = (int(split[i]) // 2, int(split[i + 1]) // 2, int(split[i + 2]) // 2, int(split[i + 3]) // 2)
             values.append(box)
         labels[split[0]] = values
 
