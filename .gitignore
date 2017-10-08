@@ -1,6 +1,7 @@
 # TensorFlow FastRCNN model
 object-detection/.ckpt-pretrained/
 object-detection/.ckpt-trained/
+object-detection/exported-model/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

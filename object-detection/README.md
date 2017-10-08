@@ -21,3 +21,11 @@ Assuming you have already installed the necessary dependencies and setup the `.c
 $ python train.py --logtostderr --train_dir=.ckpt-trained/ --pipeline_config_path=<your_config_file>
 ```
 `train_dir` is the path where you want to store *your* training checkpoints.
+
+## Exporting trained model
+
+```bash
+$ python export_inference_graph.py --input_type=image_tensor --pipeline_config_path=<your_config_file> --trained_checkpoint_prefix=.ckpt-trained/model.ckpt-500 --output_directory=exported-model/
+```
+`trained_checkpoint_prefix` is the same as `train_dir` followed by the `model.ckpt-<iter_number>` where <iter_number> is the number of iterations you trained the model for.
+`output_directory` is where you want the model to be frozen to.
