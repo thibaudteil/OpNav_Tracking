@@ -1,3 +1,10 @@
+# TensorFlow FastRCNN model
+object-detection/.ckpt/frozen_inference_graph.pb
+object-detection/.ckpt/graph.pbtxt
+object-detection/.ckpt/model.ckpt.data-00000-of-00001
+object-detection/.ckpt/model.ckpt.index
+object-detection/.ckpt/model.ckpt.meta
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
