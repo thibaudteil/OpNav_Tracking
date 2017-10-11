@@ -9,6 +9,7 @@
 import numpy as np
 from matplotlib import pyplot as plt
 import cv2
+import time
 from fractions import gcd
 def lcm(a,b): return abs(a * b) / gcd(a,b) if a and b else 0
 
@@ -57,6 +58,7 @@ plt.close()
 # The plots look like garbage (circle finding is crap)
 # bluring image in different ways
 ###############################################################
+time1 = time.time()
 
 img = cv2.imread(imPath + imName + imExt,0)
 width, height = img.shape[:2]
@@ -77,6 +79,7 @@ blur_img = cv2.medianBlur(img,blur_coef)
 # THRESH_TOZERO
 ret,cimg1 = cv2.threshold(blur_img,127,255,cv2.THRESH_TOZERO)
 ret,cimg2 = cv2.threshold(blur_img,127,255,cv2.THRESH_TOZERO_INV)
+
 
 # Add two images with weighting
 alpha = 0.5
@@ -99,6 +102,8 @@ for i in circles[0,:]:
     # draw the center of the circle
     cv2.circle(cimg,(i[0],i[1]),2,(0,0,255),3)
 
+time2 = time.time()
+print time2 - time1
 cv2.imwrite(imPath+imName+'_circ'+ imExt, cimg)
 if True:
     cv2.imshow('Detected circles',cimg)
