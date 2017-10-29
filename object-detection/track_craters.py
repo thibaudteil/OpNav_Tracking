@@ -75,10 +75,10 @@ with detection_graph.as_default():
                 np.squeeze(boxes),
                 np.squeeze(classes).astype(np.int32),
                 np.squeeze(scores),
-                tag,
                 category_index,
                 use_normalized_coordinates=True,
-                line_thickness=1)
+                line_thickness=1,
+                id_tag=tag)
 
             # Show video
             cv2.imshow('Crater Detector', cv2.resize(image_np, (800,600)))

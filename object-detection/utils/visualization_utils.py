@@ -324,7 +324,6 @@ def visualize_boxes_and_labels_on_image_array(image,
                                               boxes,
                                               classes,
                                               scores,
-                                              tag,
                                               category_index,
                                               instance_masks=None,
                                               keypoints=None,
@@ -332,7 +331,8 @@ def visualize_boxes_and_labels_on_image_array(image,
                                               max_boxes_to_draw=20,
                                               min_score_thresh=.5,
                                               agnostic_mode=False,
-                                              line_thickness=4):
+                                              line_thickness=4,
+                                              id_tag=None):
   """Overlay labeled boxes on an image with formatted scores and label names.
 
   This function groups boxes that correspond to the same location
@@ -362,6 +362,7 @@ def visualize_boxes_and_labels_on_image_array(image,
       class-agnostic mode or not.  This mode will display scores but ignore
       classes.
     line_thickness: integer (default: 4) controlling line width of the boxes.
+    id_tag: Optional paramter used when tagging and tracking identified objects.
   """
   # Create a display string (and color) for every box location, group any boxes
   # that correspond to the same location.
@@ -386,15 +387,22 @@ def visualize_boxes_and_labels_on_image_array(image,
             class_name = category_index[classes[i]]['name']
           else:
             class_name = 'N/A'
-          display_str = '{}: {}% ID: {}'.format(
-              class_name,
-              int(100*scores[i]),
-              int(tag))
+          if id_tag is not None:
+            display_str = '{}: {}% ID: {}'.format(
+                class_name,
+                int(100*scores[i]),
+                int(id_tag))
+          else:
+            display_str = '{}: {}%'.format(
+                class_name,
+                int(100*scores[i]))
         else:
-          display_str = 'score: {}% ID: {}'.format(
-              int(100 * scores[i]),
-              int(tag))
-          display_str = display_str + " " + str(tag)
+          if id_tag is not None:
+            display_str = 'score: {}% ID: {}'.format(
+                int(100 * scores[i]),
+                int(id_tag))
+          else:
+            display_str = 'score: {}%'.format(int(100 * scores[i]))
         box_to_display_str_map[box].append(display_str)
         if agnostic_mode:
           box_to_color_map[box] = 'DarkOrange'
