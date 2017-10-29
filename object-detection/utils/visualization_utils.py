@@ -324,6 +324,7 @@ def visualize_boxes_and_labels_on_image_array(image,
                                               boxes,
                                               classes,
                                               scores,
+                                              tag,
                                               category_index,
                                               instance_masks=None,
                                               keypoints=None,
@@ -385,11 +386,15 @@ def visualize_boxes_and_labels_on_image_array(image,
             class_name = category_index[classes[i]]['name']
           else:
             class_name = 'N/A'
-          display_str = '{}: {}%'.format(
+          display_str = '{}: {}% ID: {}'.format(
               class_name,
-              int(100*scores[i]))
+              int(100*scores[i]),
+              int(tag))
         else:
-          display_str = 'score: {}%'.format(int(100 * scores[i]))
+          display_str = 'score: {}% ID: {}'.format(
+              int(100 * scores[i]),
+              int(tag))
+          display_str = display_str + " " + str(tag)
         box_to_display_str_map[box].append(display_str)
         if agnostic_mode:
           box_to_color_map[box] = 'DarkOrange'

@@ -67,12 +67,15 @@ with detection_graph.as_default():
                 feed_dict={image_tensor: image_np_expanded})
             # Visualization of the results of a detection.
             end = time.time()
+            # Tag for image
+            tag = 3
             print(end - start)
             vis_util.visualize_boxes_and_labels_on_image_array(
                 image_np,
                 np.squeeze(boxes),
                 np.squeeze(classes).astype(np.int32),
                 np.squeeze(scores),
+                tag,
                 category_index,
                 use_normalized_coordinates=True,
                 line_thickness=1)
