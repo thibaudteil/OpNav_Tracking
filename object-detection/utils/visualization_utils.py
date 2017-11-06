@@ -332,7 +332,7 @@ def visualize_boxes_and_labels_on_image_array(image,
                                               min_score_thresh=.5,
                                               agnostic_mode=False,
                                               line_thickness=4,
-                                              id_tag=None):
+                                              id_tag=[]):
   """Overlay labeled boxes on an image with formatted scores and label names.
 
   This function groups boxes that correspond to the same location
@@ -387,22 +387,23 @@ def visualize_boxes_and_labels_on_image_array(image,
             class_name = category_index[classes[i]]['name']
           else:
             class_name = 'N/A'
-          if id_tag is not None:
-            display_str = '{}: {}% ID: {}'.format(
-                class_name,
-                int(100*scores[i]),
-                int(id_tag))
-          else:
+          if not id_tag:
             display_str = '{}: {}%'.format(
-                class_name,
-                int(100*scores[i]))
-        else:
-          if id_tag is not None:
-            display_str = 'score: {}% ID: {}'.format(
-                int(100 * scores[i]),
-                int(id_tag))
+              class_name,
+              int(100*scores[i]))
           else:
+            display_str = '{}: {}% ID: {}'.format(
+              class_name,
+              int(100*scores[i]),
+              id_tag[i])
+
+        else:
+          if not id_tag:
             display_str = 'score: {}%'.format(int(100 * scores[i]))
+          else:
+            display_str = 'score: {}% ID: {}'.format(
+              int(100 * scores[i]),
+              3)
         box_to_display_str_map[box].append(display_str)
         if agnostic_mode:
           box_to_color_map[box] = 'DarkOrange'
