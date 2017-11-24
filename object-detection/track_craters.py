@@ -30,7 +30,7 @@ category_index = label_map_util.create_category_index(categories)
 
 # Path to video
 PATH_TO_TEST_IMAGES_DIR = 'test-images'
-vid = 'video1.mp4'
+vid = 'video-2.mp4'
 video_path = os.path.join(PATH_TO_TEST_IMAGES_DIR, vid)
 
 # Read the exported graph
@@ -77,8 +77,8 @@ with detection_graph.as_default():
                 np.squeeze(scores),
                 category_index,
                 use_normalized_coordinates=True,
-                line_thickness=1,
-                id_tag=tag)
+                line_thickness=1)#,
+                #id_tag=tag)
 
             # Show video
             cv2.imshow('Crater Detector', cv2.resize(image_np, (800,600)))

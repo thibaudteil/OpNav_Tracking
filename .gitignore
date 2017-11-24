@@ -4,6 +4,10 @@ object-detection/.ckpt-trained/
 object-detection/exported-model/
 object-detection/exported-model-02/
 
+# Movies
+*.gif
+*.mp4
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

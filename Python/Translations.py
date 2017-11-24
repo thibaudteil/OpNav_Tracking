@@ -33,7 +33,7 @@ moon = cv2.imread(imPath + imName + imExt)
 rows,cols, thing = moon.shape
 
 NumFrames = 400
-for i in range(NumFrames/2):
+for i in range(NumFrames//2):
     frameName = str(i+1)
     M = np.float32([[1,0,cols - 4*i*int(cols/NumFrames)],[0,1,rows - 4*i*int(rows/NumFrames)]])
     dst = cv2.warpAffine(moon,M,(cols,rows))
@@ -44,7 +44,7 @@ for i in range(NumFrames/2):
     cv2.waitKey(0)
     # cv2.destroyAllWindows()
 
-for i in range(NumFrames/2, NumFrames):
+for i in range(NumFrames//2, NumFrames):
     frameName = str(i+1)
     M = np.float32([[1,0,cols - 4*NumFrames*int(cols/NumFrames) + 4*i*int(cols/NumFrames)],[0,1,rows - 4*NumFrames*int(rows/NumFrames) + 4*i*int(rows/NumFrames)]])
     dst = cv2.warpAffine(moon,M,(cols,rows))
